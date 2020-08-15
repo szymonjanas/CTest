@@ -19,6 +19,19 @@ int main(){
             test_scenarios_end();
         test_category_end();
 
+        test_category_begin("Fail test");    
+            test_scenario_begin("test assert");
+                test_assert(false);
+            test_scenario_begin("test assert array int");
+                int arr_12[5] = {1,2,3,4,6};
+                int arr_22[5] = {1,2,3,4,5};
+                test_assert_array_int(arr_12, 5, arr_22, 5);
+            test_scenario_begin("test assert comp int");
+                test_assert_comp_int(5, 6);
+            test_scenario_begin("test assert strs");
+                test_assert_strs("Hello WorLd!", "Hello World!");
+            test_scenarios_end();
+        test_category_end();
 
     return test_testing_end();
 }

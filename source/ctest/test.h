@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "engine/test-print.h"
+#include "engine/test-helper.h"
 
 void test_testing_begin();
 int test_testing_end();
