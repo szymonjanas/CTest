@@ -15,8 +15,10 @@ void test_testing_begin()
 
 int test_testing_end()
 {
-    if (enable)
+    if (enable){
+        enable = false;
         return p_testing_end();
+    }
 }
 
 void test_scenario_begin(const char * name)

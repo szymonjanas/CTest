@@ -40,6 +40,8 @@ void testing_end_summary()
 
 int p_testing_end()
 {
+    p_scenario_end();
+    p_category_end();
     if (case_all - case_pass == 0)
     {
         printf(c_color(c_green_light, "%sAll tests passed! [%i/%i]\n"), padding_end, case_pass, case_all);
