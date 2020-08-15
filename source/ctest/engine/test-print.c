@@ -2,9 +2,9 @@
 
 const char * const padding_end          = " ";
 const char * const padding_category     = "  ";
-const char * const padding_scenario     = "    ";
-const char * const padding_case         = "        ";
-const char * const padding_case_details = "              ";
+const char * const padding_scenario     = "      ";
+const char * const padding_case         = "          ";
+const char * const padding_case_details = "                ";
 
 static int case_all = 0;
 static int case_pass = 0;
@@ -110,12 +110,13 @@ void p_case_failed_strs(char *a, char *b)
 /*
     SCENARIO MANAGEMENT ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 */
-
+static bool scenario = true;
 void p_scenario_begin(const char *name)
 {
     p_scenario_end();
     ++scenario_all;
     ++category_scenario_all;
+    scenario = true;
     printf(c_color(c_cyan, "%s[%i] Scenario: "), padding_scenario, scenario_all);
     printf(c_color(c_cyan_light, "%s \n"), name);
 
@@ -123,7 +124,7 @@ void p_scenario_begin(const char *name)
 
 void p_scenario_end()
 {
-    if (scenario_all != 0)
+    if (scenario_all != 0 && scenario)
     {
         if (scenario_case_all - scenario_case_pass == 0)
         {
@@ -136,6 +137,7 @@ void p_scenario_end()
             printf(c_color(c_red_light, "%sScenario [%i/%i] tests failed!\n"), padding_case, scenario_case_all - scenario_case_pass, scenario_case_all);
         }
     }
+    scenario = false;
     scenario_case_all = 0;
     scenario_case_pass = 0;
 }
@@ -143,28 +145,31 @@ void p_scenario_end()
 /*
     CATEGORY MANAGEMENT ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 */
-
+static bool category = false;
 void p_category_begin(const char *name)
 {
+    p_scenario_end();
     p_category_end();
+    category = true;
     ++category_all;
     printf(c_color(c_magenta_light, "%s[%i] Category: %s\n"), padding_category, category_all, name);
 }
 
 void p_category_end()
 {
-    if (category_all != 0)
+    if (category_all != 0 && category)
     {
         if (category_scenario_all - category_scenario_pass == 0)
         {
-            printf(c_color(c_green, "%sCategory passed! [%i/%i]\n"), padding_category, category_scenario_pass, category_scenario_all);
+            printf(c_color(c_green, "%sCategory passed! [%i/%i]\n"), padding_scenario, category_scenario_pass, category_scenario_all);
             ++category_pass;
         }
         else 
         {
-            printf(c_color(c_red, "%sCategory [%i/%i] scenario failed!\n"), padding_category, category_scenario_all - category_scenario_pass, category_scenario_all);
+            printf(c_color(c_red, "%sCategory [%i/%i] scenario failed!\n"), padding_scenario, category_scenario_all - category_scenario_pass, category_scenario_all);
         }
     }
+    category = false;
     category_scenario_all = 0;
     category_scenario_pass = 0;
 }

@@ -17,6 +17,7 @@ int main(){
             test_scenario_begin("test assert strs");
                 test_assert_strs("Hello World!", "Hello World!");
             test_scenarios_end();
+            test_scenarios_end();
         test_category_end();
 
         test_category_begin("Fail test");    
